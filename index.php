@@ -25,7 +25,7 @@
       
     </style>
     <script src="kinetic-v3.10.5.js"></script>
-    <script src="img/ninja.js"></script>
+    <script src="img/icons.js"></script>
     <script>
       var w = window.innerWidth-2;
       var h = window.innerHeight-4;
@@ -46,6 +46,7 @@
         
         
       window.onload = function() {
+        var icon = Math.round(Math.random()*(img_coord.length-1));
         var stage = new Kinetic.Stage({
           container: "container",
           width: w,
@@ -73,10 +74,10 @@
         layerBck.add(background);
 
         
-        var l = img_coord.length;
+        var l = img_coord[icon].length;
         for(var n = 0; n < l; n++) {( function() {
-            var randX = img_coord[n][0];
-            var randY = img_coord[n][1];
+            var randX = img_coord[icon][n][0];
+            var randY = img_coord[icon][n][1];
             var randZ = ( Math.random() * 200 ) - 100;
 
             var box = new Kinetic.Rect({
@@ -90,8 +91,8 @@
               },
               width: 8,
               height: 8,
-              fill: img_color[n],
-              stroke: img_color[n],
+              fill: img_color[icon][n],
+              stroke: img_color[icon][n],
               strokeWidth: 0
             });
 
