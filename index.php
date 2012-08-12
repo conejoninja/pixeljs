@@ -30,13 +30,11 @@
       var w = window.innerWidth-2;
       var h = window.innerHeight-4;
       
-        function to2d(coordx, coordy, coordz, grados, gradosa) {
-            var numeropi = 3.141592;
-            var x=(coordx)*Math.cos((numeropi/180)*grados)-(coordz)*Math.sin((numeropi/180)*grados);
-            var z1=(coordx)*Math.sin((numeropi/180)*grados)+(coordz)*Math.cos((numeropi/180)*grados);
-            var y=(coordy)*Math.cos((numeropi/180)*gradosa)-(z1)*Math.sin((numeropi/180)*gradosa);
-            var z=(coordy)*Math.sin((numeropi/180)*gradosa)+(z1)*Math.cos((numeropi/180)*gradosa);
-
+        Kinetic.Rect.prototype.to2d = function(theta, rho) {
+            var x=(this.attrs.x3d)*Math.cos((Math.PI/180)*theta)-(this.attrs.z3d)*Math.sin((Math.PI/180)*theta);
+            var z1=(this.attrs.x3d)*Math.sin((Math.PI/180)*theta)+(this.attrs.z3d)*Math.cos((Math.PI/180)*theta);
+            var y=(this.attrs.y3d)*Math.cos((Math.PI/180)*rho)-(z1)*Math.sin((Math.PI/180)*rho);
+            var z=(this.attrs.y3d)*Math.sin((Math.PI/180)*rho)+(z1)*Math.cos((Math.PI/180)*rho);
             var d = 10000;
             var p =  {'x': 0, 'y' : 0, 'z' : 1};
             p.x = ((d*x)/(d+z));
@@ -44,7 +42,6 @@
             p.z = z;
 
             return p;
-
         }
         
         
@@ -121,7 +118,7 @@
             for(var n = 0; n < bl; n++) {
                 var shape = boxes[n];
                 var constk = 0.25;
-                var coord = to2d(shape.attrs.x3d, shape.attrs.y3d, shape.attrs.z3d, constk*(mouse.x-xRandom), constk*(mouse.y-yRandom));
+                var coord = shape.to2d(constk*(mouse.x-xRandom), constk*(mouse.y-yRandom));
                 shape.attrs.x = (w/2) + coord.x;
                 shape.attrs.y = (h/2) + coord.y;
                 shape.attrs.z = -coord.z;
