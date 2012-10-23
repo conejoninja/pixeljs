@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+
 <html>
   <head>
     <style>
@@ -44,6 +45,34 @@
             return p;
         }
         
+        function loadIcon(icon) {
+            var l = img_coord[icon].length;
+            for(var n = 0; n < l; n++) {( function() {
+                var randX = img_coord[icon][n][0];
+                var randY = img_coord[icon][n][1];
+                var randZ = ( Math.random() * 200 ) - 100;
+
+                var box = new Kinetic.Rect({
+                x3d: randX,
+                y3d: randY,
+                z3d: randZ,
+                zIndex:1,
+                offset: {
+                    x: 5,
+                    y: 5
+                },
+                width: 8,
+                height: 8,
+                fill: img_color[icon][n],
+                stroke: img_color[icon][n],
+                strokeWidth: 0
+                });
+
+                layer.add(box);
+            }());
+            }
+        };
+        
         
       window.onload = function() {
         var icon = Math.round(Math.random()*(img_coord.length-1));
@@ -74,32 +103,7 @@
         layerBck.add(background);
 
         
-        var l = img_coord[icon].length;
-        for(var n = 0; n < l; n++) {( function() {
-            var randX = img_coord[icon][n][0];
-            var randY = img_coord[icon][n][1];
-            var randZ = ( Math.random() * 200 ) - 100;
-
-            var box = new Kinetic.Rect({
-              x3d: randX,
-              y3d: randY,
-              z3d: randZ,
-              zIndex:1,
-              offset: {
-                x: 5,
-                y: 5
-              },
-              width: 8,
-              height: 8,
-              fill: img_color[icon][n],
-              stroke: img_color[icon][n],
-              strokeWidth: 0
-            });
-
-            layer.add(box);
-          }());
-        }
-        
+        loadIcon(icon);
         
         stage.add(layerBck);
         stage.add(layer);
@@ -139,6 +143,12 @@
                     }
                 }
             }
+
+
+            if(Math.abs(constk*(mouse.x-xRandom))<10 && Math.abs(constk*(mouse.y-yRandom))<10) {
+                console.log("ESTOY CERCA");
+            }
+
 
             layer.draw();
         });
